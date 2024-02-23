@@ -3,6 +3,19 @@ name = "xtrk"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "xtrk"
+path = "src/lib.rs"
+
+[[bin]]
+name = "xtrk"
+path = "src/main.rs"
+
+[features]
+default = ["crypt", "sten"]
+crypt = []
+sten = []
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
