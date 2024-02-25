@@ -44,9 +44,4 @@ impl Image {
             .map_err(ImageIoError::ImageEncodingError)?;
         Ok(())
     }
-
-    /// Get mutable reference to the inner pixels. Internal use only to ensure integrity.
-    pub(super) fn as_mut_inner(&mut self) -> &mut RgbaImage {
-        &mut self.0
-    }
 }
