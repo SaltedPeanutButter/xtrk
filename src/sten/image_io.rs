@@ -1,14 +1,14 @@
 use std::path::Path;
 
-use image::{self, ImageFormat, RgbaImage};
+use image::{ImageError, ImageFormat, RgbaImage};
 
 #[derive(Debug, thiserror::Error)]
 pub enum ImageIoError {
-    #[error("Unable to decode image. Source: {0}")]
-    ImageDecodingError(image::ImageError),
+    #[error("{0}")]
+    ImageDecodingError(ImageError),
 
-    #[error("Unable to encode image. Source: {0}")]
-    ImageEncodingError(image::ImageError),
+    #[error("{0}")]
+    ImageEncodingError(ImageError),
 }
 
 type Result<T> = std::result::Result<T, ImageIoError>;
