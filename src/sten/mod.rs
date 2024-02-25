@@ -74,7 +74,7 @@ pub trait Stenable: Sized {
         }
 
         let mut container_byte_pos = 0; // to keep track of the container byte position
-        // Iterate over byte of payload
+                                        // Iterate over byte of payload
         for payload_byte in new_payload {
             // Iterate over bit position of payload byte
             for payload_bit_pos in 0..8 {
@@ -211,7 +211,6 @@ impl Destenable for String {
     fn from_raw_bytes(data: Vec<u8>) -> Option<Self> {
         String::from_utf8(data).ok()
     }
-
 }
 
 impl Stenable for u8 {
@@ -345,13 +344,15 @@ impl<T: Stenable, E: Stenable> Stenable for Result<T, E> {
 
 impl<T: Destenable, E: Destenable> Destenable for Result<T, E> {
     fn from_raw_bytes(data: Vec<u8>) -> Option<Self> {
-        T::from_raw_bytes(data.clone()).map(Ok).or_else(|| E::from_raw_bytes(data).map(Err))
+        T::from_raw_bytes(data.clone())
+            .map(Ok)
+            .or_else(|| E::from_raw_bytes(data).map(Err))
     }
 }
 
 pub mod prelude {
-    pub use super::{Container, Destenable, Stenable, StenError};
     pub use super::image_io::Image;
+    pub use super::{Container, Destenable, StenError, Stenable};
 }
 
 #[cfg(test)]
