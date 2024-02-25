@@ -345,13 +345,31 @@ pub mod prelude {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_sten_single_byte() {
-        let mut container = vec![0; 255];
-        let payload = vec![255];
-        payload.sten(&mut container).unwrap();
-        let new_payload = Vec::desten(&container).unwrap();
-        assert_eq!(new_payload, vec![255]);
+    type VecByte = Vec<u8>;
+    macro_rules! make_test_sten {
+        ($test_name: ident, $container_size: expr, $payload: expr, $payload_type: ty) => {
+            #[test]
+            fn $test_name() {
+                let mut container = vec![13; $container_size];
+                let payload = $payload;
+                payload.sten(&mut container).unwrap();
+                let new_payload = <$payload_type>::desten(&container).unwrap();
+                assert_eq!(new_payload, $payload);
+            }
+        };
     }
+
+    make_test_sten!(test_sten_single_byte, 256, vec![255], VecByte);
+    make_test_sten!(test_sten_many_bytes, 256, vec![1, 3, 5, 7, 9], VecByte);
+    make_test_sten!(test_sten_string, 256, String::from("Hello, Sten"), String);
+    make_test_sten!(test_sten_u8, 256, 100u8, u8);
+    make_test_sten!(test_sten_u16, 256, 1234u16, u16);
+    make_test_sten!(test_sten_u32, 256, 0x89ABCDEFu32, u32);
+    make_test_sten!(test_sten_u64, 256, 0x1234567890ABCDEFu64, u64);
+    make_test_sten!(test_sten_i8, 256, 100i8, i8);
+    make_test_sten!(test_sten_i16, 256, 1234i16, i16);
+    make_test_sten!(test_sten_i32, 256, 0x19ABCDEFi32, i32);
+    make_test_sten!(test_sten_i64, 256, 0x1234567890ABCDEFi64, i64);
+    make_test_sten!(test_sten_f32, 256, 0.12345678f32, f32);
+    make_test_sten!(test_sten_f64, 256, 0.1234567890123456f64, f64);
 }
