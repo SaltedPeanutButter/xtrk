@@ -2,6 +2,8 @@ use std::path::Path;
 
 use image::{ImageError, ImageFormat, RgbaImage};
 
+use super::Container;
+
 #[derive(Debug, thiserror::Error)]
 pub enum ImageIoError {
     #[error("{0}")]
@@ -43,5 +45,15 @@ impl Image {
             .save_with_format(path, format)
             .map_err(ImageIoError::ImageEncodingError)?;
         Ok(())
+    }
+}
+
+impl Container for Image {
+    fn as_bytes(&self) -> &[u8] {
+        self.0.as_raw()
+    }
+
+    fn as_mut_bytes(&mut self) -> &mut [u8] {
+        self.0.as_mut()
     }
 }
