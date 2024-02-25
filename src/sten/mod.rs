@@ -81,6 +81,9 @@ pub trait Stenable: Sized {
                 // Get payload bit
                 let payload_bit = (payload_byte >> payload_bit_pos) & 1;
 
+                // Unset the container bit
+                container[container_byte_pos] &= 0xFE;
+
                 // Set the container bit at the position with the payload bit
                 container[container_byte_pos] |= payload_bit;
 
