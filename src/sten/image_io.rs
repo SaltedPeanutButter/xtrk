@@ -13,13 +13,13 @@ pub enum ImageIoError {
 
 type Result<T> = std::result::Result<T, ImageIoError>;
 
-pub struct StenImage(RgbaImage);
+pub struct Image(RgbaImage);
 
-impl StenImage {
+impl Image {
     /// Open an image from the given path.
-    pub fn open<P: AsRef<Path>>(path: P) -> Result<StenImage> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<Image> {
         let img = image::open(path).map_err(ImageIoError::ImageDecodingError)?;
-        Ok(StenImage(img.to_rgba8()))
+        Ok(Image(img.to_rgba8()))
     }
 
     /// Save the image to the given path in PNG format.
