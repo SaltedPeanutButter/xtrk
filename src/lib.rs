@@ -12,6 +12,7 @@
 //! - [crypt] for crytography
 //!
 //! Do refer to individual module's documentation for more information.
+#![deny(clippy::all)]
 
 /// Collection of cryptographic utilities.
 ///
