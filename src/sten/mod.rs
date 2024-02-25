@@ -162,6 +162,18 @@ pub trait Destenable: Sized {
     }
 }
 
+impl Stenable for &[u8] {
+    fn get_raw_bytes(self) -> Vec<u8> {
+        self.to_vec()
+    }
+}
+
+impl Stenable for &mut [u8] {
+    fn get_raw_bytes(self) -> Vec<u8> {
+        self.to_vec()
+    }
+}
+
 impl<T: Stenable> Stenable for Option<T> {
     fn get_raw_bytes(self) -> Vec<u8> {
         match self {
